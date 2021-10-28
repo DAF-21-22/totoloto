@@ -9,6 +9,8 @@
 
 namespace App\Domain;
 
+use App\Domain\Game\NumbersGenerator;
+
 /**
  * Game
  *
@@ -21,6 +23,7 @@ abstract class Game
     private int $endNumber;
     private ?int $totalNumbers;
     private ?int $totalExtras;
+    private NumbersGenerator $generator;
 
     /**
      * Creates a Totoloto
@@ -40,6 +43,7 @@ abstract class Game
         $this->endNumber = $endNumber;
         $this->totalNumbers = $totalNumbers;
         $this->totalExtras = $totalExtras;
+        $this->generator = new NumbersGenerator();
     }
 
     /**
@@ -80,5 +84,23 @@ abstract class Game
     public function totalExtras(): ?int
     {
         return $this->totalExtras;
+    }
+
+    public function withGenerator(NumbersGenerator $generator): self
+    {
+        $this->generator = $generator;
+        return $this;
+    }
+
+    public function generate(int $totalBets)
+    {
+        $bets = [];
+        for ($i = 0; $i < $totalBets; $i++) {
+            $bets[$i] = new Bet(
+                $this->generator->generate($this->totalNumbers, $this->startNumber, $this->endNumber),
+                $this->generator->generate($this->totalExtras, 1, 13),
+            );
+        }
+        return $bets;
     }
 }
