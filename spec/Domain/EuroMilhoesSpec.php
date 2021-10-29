@@ -81,4 +81,12 @@ class EuroMilhoesSpec extends ObjectBehavior
 
         $bets[0]->numbers()->shouldBe($numbers);
     }
+
+    function it_has_a_list_of_bets()
+    {
+        $this->bets()->shouldBeArray();
+        $this->bets()->shouldHaveCount(0);
+        $this->generate(1);
+        $this->bets()->shouldHaveCount(1);
+    }
 }
