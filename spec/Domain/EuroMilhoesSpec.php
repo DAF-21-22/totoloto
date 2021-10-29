@@ -2,8 +2,10 @@
 
 namespace spec\App\Domain;
 
+use App\Domain\Bet;
 use App\Domain\EuroMilhoes;
 use App\Domain\Game;
+use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\ObjectBehavior;
 
 class EuroMilhoesSpec extends ObjectBehavior
@@ -49,5 +51,34 @@ class EuroMilhoesSpec extends ObjectBehavior
     function it_has_a_total_extras()
     {
         $this->totalExtras()->shouldBe($this->totalExtras);
+    }
+
+    function it_generates_a_list_of_bets(Game\NumbersGenerator $generator)
+    {
+        $this->withGenerator($generator);
+
+        $numbers = [1, 2, 3, 4, 5];
+        $extras = [2, 5];
+
+        $generator->generate($this->totalNumbers, $this->startNumber, $this->endNumber)
+            ->willReturn($numbers);
+        $generator->generate($this->totalExtras, 1, 12)
+            ->shouldBeCalled()
+            ->willReturn($extras);
+
+        $totalBets = 1;
+        $bets = $this->generate($totalBets);
+        $bets->shouldBeArray();
+        $bets->shouldHaveCount($totalBets);
+
+        foreach ($bets->getWrappedObject() as $bet) {
+            if (!$bet instanceof Bet) {
+                throw new FailureException(
+                    "Expected to have a bet, but it wasn't..."
+                );
+            }
+        }
+
+        $bets[0]->numbers()->shouldBe($numbers);
     }
 }

@@ -16,5 +16,6 @@ class Totoloto extends Game
     public function __construct()
     {
         parent::__construct(1, 49, 5, 1);
+        $this->endExtras = 13;
     }
 }

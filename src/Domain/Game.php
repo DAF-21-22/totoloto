@@ -24,6 +24,8 @@ abstract class Game
     private ?int $totalNumbers;
     private ?int $totalExtras;
     private NumbersGenerator $generator;
+    protected int $startExtras = 1;
+    protected int $endExtras = 12;
 
     /**
      * Creates a Totoloto
@@ -98,7 +100,7 @@ abstract class Game
         for ($i = 0; $i < $totalBets; $i++) {
             $bets[$i] = new Bet(
                 $this->generator->generate($this->totalNumbers, $this->startNumber, $this->endNumber),
-                $this->generator->generate($this->totalExtras, 1, 13),
+                $this->generator->generate($this->totalExtras, $this->startExtras, $this->endExtras),
             );
         }
         return $bets;
