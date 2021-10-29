@@ -65,4 +65,11 @@ class NumbersGeneratorSpec extends ObjectBehavior
             $last = $number;
         }
     }
+
+    function it_can_generate_one_number_only()
+    {
+        $numbers = $this->generate(1, 1, 100);
+        $numbers->shouldBeArray();
+        $numbers->shouldHaveCount(1);
+    }
 }

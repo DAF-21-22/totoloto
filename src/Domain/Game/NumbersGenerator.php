@@ -16,6 +16,10 @@ class NumbersGenerator
         $keys = array_rand($baseNumbers, $count);
         $numbers = [];
 
+        if (!is_array($keys)) {
+            return [$baseNumbers[$keys]];
+        }
+
         foreach ($keys as $key) {
             $numbers[] = $baseNumbers[$key];
         }

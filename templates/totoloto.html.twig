@@ -1,0 +1,14 @@
+{% block body %}
+    <h1>Totoloto</h1>
+    <p>Total generated bets: {{ game.bets()|length }}</p>
+    <ul>
+        {% for bet in game.bets %}
+        <li>{{ bet.numbers|join(', ') }} + {{ bet.extras|join(', ') }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+
