@@ -24,10 +24,10 @@ use Symfony\Component\Routing\Annotation\Route;
 final class TotolotoPage extends AbstractController
 {
 
-    #[Route("/totoloto")]
-    public function handle(GenerateGameBetsHandler $handler): Response
+    #[Route("/totoloto/{bets}")]
+    public function handle(GenerateGameBetsHandler $handler, ?int $bets = 5): Response
     {
-        $game = $handler->handle(new GenerateGameBetsCommand(Totoloto::class, 30));
+        $game = $handler->handle(new GenerateGameBetsCommand(Totoloto::class, $bets));
         return $this->render('totoloto.html.twig', ['game' => $game]);
     }
 }
