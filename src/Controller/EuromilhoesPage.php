@@ -37,6 +37,9 @@ final class EuromilhoesPage extends AbstractController
         $game = $this->handler->handle(
             new GenerateGameBetsCommand(EuroMilhoes::class, $bets)
         );
-        return $this->render('euromilhoes.html.twig',  compact('game',));
+        return $this->render(
+            'euromilhoes.html.twig',
+            compact('game', 'bets')
+        );
     }
 }

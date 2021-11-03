@@ -6,6 +6,17 @@
         <li>{{ bet.numbers|join(', ') }} + {{ bet.extras|join(', ') }}</li>
         {% endfor %}
     </ul>
+    {% set values = [5, 10, 20, 30, 50, 100] %}
+    <form action="/euromilhoes">
+    <label for="select-bets">Select the number of bets to generate: </label>
+        <select name="bets" id="select-bets">
+            {% for value in values %}
+            <option {{ value == bets ? 'selected' }} value="{{ value }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Generate</button>
+    </form>
+    <br />
     <a href="/">Go back</a>
 {% endblock %}
 
